@@ -1,14 +1,21 @@
 <html>
 
 <head>
-  <title>test socket</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
+	<title>test socket</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
 </head>
 
 <body>
+	<div class="notebook-paper">
+		<header>
+			<p class="name">Answer-It</p>
+		</header>
+		<div id="content">
+			Bonjour a tous
+		</div>
+	</div>
 	<main id="app">
-		<h1>{{title}}</h1>
 		<p>{{name}}</p>
 		<img :src="image" alt="plant">
 	</main>
@@ -17,20 +24,22 @@
 	<script>
 		const Tutorials = {
 			data() {
-			    return {
+				return {
 					title: "test",
-					name: ""
-			    }
+					name: "",
+					image: ""
+				}
 			},
 			created() {
 				const socket = io()
 				socket.on('plant', plant => {
 					this.name = plant.name
-					this.image = plant.image 
+					this.image = plant.image
 				});
 			}
 		}
 		const app = Vue.createApp(Tutorials).mount('#app')
 	</script>
 </body>
+
 </html>
