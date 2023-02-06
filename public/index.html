@@ -1,36 +1,34 @@
 <html>
 
 <head>
-  <title>Express</title>
+  <title>test socket</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="https://unpkg.com/vue@3.2.36/dist/vue.global.js"></script>
 </head>
 
 <body>
 	<main id="app">
-		<h1>Les photos de l'album : {{ album }}</h1>
-		<span v-if="photos.length < 1">Désolé, il n'y a aucune image.</span>
-		<span v-else>Vous trouverez dans cet album {{ photos.length }} photos. </span>
-		<figure v-for="(tuto, key) in photos" :key="key">
-			<img v-bind:src="photos[key].url" v-bind:alt="photos[key].title" />
-			<figcaption>{{ photos[key].title }}</figcaption>
-		</figure>
-
+		<h1>{{title}}</h1>
+		<p>{{name}}</p>
+		<img :src="image" alt="plant">
 	</main>
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://unpkg.com/vue@next"></script>
 	<script>
 		const Tutorials = {
 			data() {
 			    return {
-			    	album: 1,
-			      	photos:[]
+					title: "test",
+					name: ""
 			    }
 			},
 			created() {
-				fetch('https://jsonplaceholder.typicode.com/albums/1/photos')
-  				.then((response) => response.json())
-  				.then((json) => {this.photos= json});
-  			}
+				const socket = io()
+				socket.on('plant', plant => {
+					this.name = plant.name
+					this.image = plant.image 
+				});
+			}
 		}
 		const app = Vue.createApp(Tutorials).mount('#app')
 	</script>
